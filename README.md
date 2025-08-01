@@ -105,9 +105,14 @@ Located at: [.tekton/tasks.yml](.tekton/tasks.yml)
 6. Deploy with `oc`
 
 📸 *Pipeline setup and execution*  
-- Pipeline YAML: ![Pipeline YAML](./screenshots/oc-pipelines-oc-final.PNG)  
-- Successful run: ![Pipeline Success](./screenshots/oc-pipelines-oc-green.PNG)  
-- Application Logs: ![App Logs](./screenshots/oc-pipelines-app-logs.PNG)
+- Pipeline YAML:
+  ![Pipeline YAML](./screenshots/oc-pipelines-oc-final.PNG)
+  
+- Successful run:
+  ![Pipeline Success](./screenshots/oc-pipelines-oc-green.PNG)
+  
+- Application Logs:
+  ![App Logs](./screenshots/oc-pipelines-app-logs.PNG)
 
 ---
 
