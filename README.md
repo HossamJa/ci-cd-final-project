@@ -1,43 +1,156 @@
-# CI/CD Tools and Practices Final Project Template
+# CI/CD Final Project - Counter Microservice with GitHub Actions and OpenShift Pipelines
 
-This repository contains the template to be used for the Final Project for the Coursera course **CI/CD Tools and Practices**.
+This repository contains the source code and pipeline configurations for the final project of the IBM course **"Continuous Integration and Continuous Delivery (CI/CD)"**. The project demonstrates the implementation of a complete CI/CD pipeline for a Python-based microservice using GitHub Actions and OpenShift Pipelines with Tekton.
 
-## Usage
+---
 
-This repository is to be used as a template to create your own repository in your own GitHub account. No need to Fork it as it has been set up as a Template. This will avoid confusion when making Pull Requests in the future.
+## 🧩 Project Overview
 
-From the GitHub **Code** page, press the green **Use this template** button to create your own repository from this template.
+You're part of a DevOps team responsible for the backend of a **counter microservice** API. The frontend is already built. Your job is to ensure continuous integration and deployment of this microservice using modern DevOps practices.
 
-Name your repo: `ci-cd-final-project`.
+---
 
-## Setup
+## ✅ Objectives
 
-After entering the lab environment you will need to run the `setup.sh` script in the `./bin` folder to install the prerequisite software.
+- Create a CI pipeline in GitHub Actions to:
+  - Lint the code using `flake8`
+  - Run unit tests using `nose`
+- Create CD pipeline using OpenShift Pipelines with Tekton:
+  - Tasks for cleanup, linting, testing, building image, and deployment
+- Deploy the application on an OpenShift cluster using Tekton and `oc` commands
+
+---
+
+## 📁 Project Structure
 
 ```bash
-bash bin/setup.sh
+.
+├── .github/workflows/
+│   ├── workflow.yml        # GitHub Actions CI workflow (lint + test)
+│
+├── .tekton/
+│   ├── tasks.yml           # Tekton tasks for cleanup, nose tests, build, deploy
+│
+├── bin/
+│   └── setup.sh            # Project setup script
+│
+├── service/
+│   ├── common/
+│   │   ├── error_handlers.py
+│   │   ├── log_handlers.py
+│   │   └── status.py
+│   ├── routes.py
+│   └── tests/
+│       └── test_routes.py  # Nose unit tests
+│
+├── Dockerfile
+├── requirements.txt
+├── setup.cfg
+├── LICENSE
+├── Procfile
+└── README.md               # ← You are here!
 ```
 
-Then you must exit the shell and start a new one for the Python virtual environment to be activated.
+---
 
-```bash
-exit
-```
+## 🔧 CI Pipeline (GitHub Actions)
 
-## Objectives
+Located at: [.github/workflows/workflow.yml](.github/workflows/workflow.yml)
 
-* Create a CI pipeline in GitHub Actions with steps for linting and unit testing.
-* Use Tekton to create tasks for linting, unit testing, and building an image.
-* Create an OpenShift CI Pipeline that uses the previously created Tekton steps.
-* Add the deploy step to the OpenShift pipeline that deploys the code to the lab OpenShift cluster.
+### Trigger
+- On `push` and `pull_request` to the `main` branch
 
+### Steps
+- Checkout the code
+- Install dependencies from `requirements.txt`
+- Run **flake8** linting:
+  ```bash
+  flake8 service --count --select=E9,F63,F7,F82 --show-source --statistics
+  flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
+  ```
+- Run **nose** tests:
+  ```bash
+  nosetests -v --with-spec --spec-color --with-coverage --cover-package=app
+  ```
 
-## License
+📸 *Screenshot of successful GitHub Actions CI pipeline*  
+![GitHub Actions CI Validation](./screenshots/cicd-github-validate.png)
 
-Licensed under the Apache License. See [LICENSE](/LICENSE)
+---
 
-## Author
+## 🚀 CD Pipeline (OpenShift Pipelines with Tekton)
 
-Skills Network
+Located at: [.tekton/tasks.yml](.tekton/tasks.yml)
 
-## <h3 align="center"> © IBM Corporation 2023. All rights reserved. <h3/>
+### Tekton Tasks
+- **cleanup**: Clears output workspace before build
+- **nose**: Runs unit tests
+- **Additional Tasks**: clone, lint, buildah image build, deploy
+
+### PVC
+- Created using OpenShift console
+- Name: `oc-lab-pvc`
+- StorageClass: `skills-network-learner`
+- Size: 1GB
+
+📸 *PVC details in OpenShift*  
+![PVC Details](./screenshots/oc-pipelines-console-pvc-details.png)
+
+### OpenShift Pipeline Steps
+1. Cleanup
+2. Git Clone
+3. Lint
+4. Test
+5. Build Image
+6. Deploy with `oc`
+
+📸 *Pipeline setup and execution*  
+- Pipeline YAML: ![Pipeline YAML](./screenshots/oc-pipelines-oc-final.png)  
+- Successful run: ![Pipeline Success](./screenshots/oc-pipelines-oc-green.png)  
+- Application Logs: ![App Logs](./screenshots/oc-pipelines-app-logs.png)
+
+---
+
+## 📦 Deployment
+
+- Image is built using `buildah`
+- Application deployed to OpenShift with:
+  ```bash
+  oc create deployment $(params.app-name) --image=$(params.build-image) --dry-run=client -o yaml | oc apply -f -
+  ```
+
+---
+
+## 📸 Screenshots Checklist
+
+| Description                              | Filename                                 |
+|------------------------------------------|------------------------------------------|
+| GitHub Actions successful run            | `cicd-github-validate.png`               |
+| OpenShift PVC Details                    | `oc-pipelines-console-pvc-details.png`   |
+| OpenShift Pipeline definition            | `oc-pipelines-oc-final.png`              |
+| OpenShift Pipeline successful execution  | `oc-pipelines-oc-green.png`              |
+| Application logs                         | `oc-pipelines-app-logs.png`              |
+
+All screenshots are stored in the `screenshots/` folder.
+
+---
+
+## 📬 Submission Checklist
+
+- [x] CI workflow in `.github/workflows/workflow.yml`
+- [x] Tekton tasks in `.tekton/tasks.yml`
+- [x] Working GitHub Actions CI
+- [x] Working OpenShift CD pipeline
+- [x] Screenshots added for all required steps
+
+---
+
+## 📎 License
+
+This project is licensed under the [MIT License](./LICENSE).
+
+---
+
+## 🙌 Acknowledgment
+
+Built as part of the **IBM DevOps and Software Engineering** certification track.
