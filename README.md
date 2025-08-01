@@ -74,7 +74,7 @@ Located at: [.github/workflows/workflow.yml](.github/workflows/workflow.yml)
   ```
 
 📸 *Screenshot of successful GitHub Actions CI pipeline*  
-![GitHub Actions CI Validation](./screenshots/cicd-github-validate.png)
+![GitHub Actions CI Validation](./screenshots/cicd-github-validate.PNG)
 
 ---
 
@@ -94,7 +94,7 @@ Located at: [.tekton/tasks.yml](.tekton/tasks.yml)
 - Size: 1GB
 
 📸 *PVC details in OpenShift*  
-![PVC Details](./screenshots/oc-pipelines-console-pvc-details.png)
+![PVC Details](./screenshots/oc-pipelines-console-pvc-details.PNG)
 
 ### OpenShift Pipeline Steps
 1. Cleanup
@@ -105,9 +105,9 @@ Located at: [.tekton/tasks.yml](.tekton/tasks.yml)
 6. Deploy with `oc`
 
 📸 *Pipeline setup and execution*  
-- Pipeline YAML: ![Pipeline YAML](./screenshots/oc-pipelines-oc-final.png)  
-- Successful run: ![Pipeline Success](./screenshots/oc-pipelines-oc-green.png)  
-- Application Logs: ![App Logs](./screenshots/oc-pipelines-app-logs.png)
+- Pipeline YAML: ![Pipeline YAML](./screenshots/oc-pipelines-oc-final.PNG)  
+- Successful run: ![Pipeline Success](./screenshots/oc-pipelines-oc-green.PNG)  
+- Application Logs: ![App Logs](./screenshots/oc-pipelines-app-logs.PNG)
 
 ---
 
@@ -125,11 +125,11 @@ Located at: [.tekton/tasks.yml](.tekton/tasks.yml)
 
 | Description                              | Filename                                 |
 |------------------------------------------|------------------------------------------|
-| GitHub Actions successful run            | `cicd-github-validate.png`               |
-| OpenShift PVC Details                    | `oc-pipelines-console-pvc-details.png`   |
-| OpenShift Pipeline definition            | `oc-pipelines-oc-final.png`              |
-| OpenShift Pipeline successful execution  | `oc-pipelines-oc-green.png`              |
-| Application logs                         | `oc-pipelines-app-logs.png`              |
+| GitHub Actions successful run            | `cicd-github-validate.PNG`               |
+| OpenShift PVC Details                    | `oc-pipelines-console-pvc-details.PNG`   |
+| OpenShift Pipeline definition            | `oc-pipelines-oc-final.PNG`              |
+| OpenShift Pipeline successful execution  | `oc-pipelines-oc-green.PNG`              |
+| Application logs                         | `oc-pipelines-app-logs.PNG`              |
 
 All screenshots are stored in the `screenshots/` folder.
 
